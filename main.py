@@ -15,6 +15,10 @@ except Exception:
 
 if __name__ == '__main__':
     
+    '''
     bbc = BBCMiner()
     bbc.harvest()
     bbc.display()
+    '''
+    
+    
