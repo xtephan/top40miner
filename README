@@ -1,0 +1,8 @@
+Top 40 music data minner
+Run:
+./main.py ARGC
+where ARGC can be
+- bbc
+- at40
+- r21
+- de40

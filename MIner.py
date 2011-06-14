@@ -38,4 +38,19 @@ class Miner():
         #get the html top
         return htmlSource.split(begin)[1].split(end)[0]
     
-    
+    #generates an sql file
+    #using sql files to avoid a damn module
+    def gensql(self):
+        print("Generationg sql file ...")
+        file = open('tmp.sql', 'w')
+        file.write('USE `musicstore`;\n')
+        file.write('INSERT INTO `music` (`Nr`, `Artist`, `Song`, `Album`, `Genre`) VALUES\n')
+        
+        i=1
+        for entry in self.topten:
+            file.write("(" + str(i) + ",'" + entry[0] + "', '" + entry[1] + "', '', ''),\n")
+            i+=1
+        
+        file.seek(file.tell()-2, 0)
+        file.write(";")
+        

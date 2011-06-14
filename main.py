@@ -43,20 +43,29 @@ except Exception:
 
 if __name__ == '__main__':
     
-    '''
-    bbc = BBCMiner()
-    bbc.harvest()
-    bbc.display()
+    for arg in sys.argv: 
         
-    at = AT40()
-    at.harvest()
-    at.display()
+        if arg=="bbc" or arg=="all":
+            bbc = BBCMiner()
+            bbc.harvest()
+            bbc.display() 
+            
+        if arg=="at40" or arg=="all":
+            at = AT40()
+            at.harvest()
+            at.display()
+            
+        if arg=="r21" or arg=="all":            
+            r21 = R21()
+            r21.harvest()
+            r21.display()
+            
+        if arg=="de40" or arg=="all":     
+            de = DE40()
+            de.harvest()
+            de.gensql()
+            #de.display()
+
     
-    r21 = R21()
-    r21.harvest()
-    r21.display()
-    '''
-    
-    de = DE40()
-    de.harvest()
-    de.display()
+
+    print("[**] Job Done! See ya!!")
