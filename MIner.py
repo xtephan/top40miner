@@ -37,3 +37,5 @@ class Miner():
         
         #get the html top
         return htmlSource.split(begin)[1].split(end)[0]
+    
+    
