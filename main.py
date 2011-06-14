@@ -32,6 +32,13 @@ try:
 except Exception:
     print("Error loading Radio21 Miner")
     sys.exit(0)
+    
+try: 
+    from DEMiner import DE40
+    print("Loading Germany Miner...")
+except Exception:
+    print("Error loading Germany Miner")
+    sys.exit(0)
 
 
 if __name__ == '__main__':
@@ -44,8 +51,12 @@ if __name__ == '__main__':
     at = AT40()
     at.harvest()
     at.display()
-    '''
     
     r21 = R21()
     r21.harvest()
     r21.display()
+    '''
+    
+    de = DE40()
+    de.harvest()
+    de.display()
