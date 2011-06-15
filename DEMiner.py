@@ -19,6 +19,7 @@ class DE40(Miner):
         '''
         self.url="http://top40-charts.com/chart.php?cid=12"
         self.topten=[]
+        self.name="de40"
         
         
     def getArtist(self,text):

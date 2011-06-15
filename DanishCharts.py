@@ -9,7 +9,7 @@ import urllib.request
 
 class DC(Miner):
     '''
-    Miner the AT40
+    Miner the DC40
     '''
 
 
@@ -19,48 +19,70 @@ class DC(Miner):
         '''
         self.url="http://danishcharts.com/weekchart.asp?cat=s"
         self.topten=[]
+        self.name="dc40"
         
         
     def getArtist(self,text):
         
         try:
-            tmp=text.split('</a><br />')[0]
+            tmp=text.split('interpret=')[1].split('&titel=')[0]
             return tmp
         except Exception:
             print("[!!] Error parsing the followng entry " + text)
+            return ""
             
             
     def getTrack(self,text):
         
         try:
-            tmp=text.split('</a><br />')[1].split('</td>')[0]
-            return tmp.strip()
+            tmp=text.split('&titel=')[1].split('&cat=')[0].strip()
+            return tmp
         except Exception:
             print("[!!] Error parsing the followng entry " + text)
+            return ""
         
-    def thispagesplit(self,begin,end):
+    def thispagesplit(self):
         
         #get the html source
         print("Downloading " + self.url + "...")
         sock = urllib.request.urlopen(self.url) 
         htmlSource = str(sock.read())
         
-        print(htmlSource)
-        
         #get the html top
-        return htmlSource.split(begin)[1].split(end)[0]    
+        return htmlSource.split('<td bgcolor="#EFEFEF">')[2].split('</table>')[0]    
+    
+    def clean(self,tmp):
+        
+        rp= [
+             ["+"," "],
+             ["%26","&"],
+             ["%2E","."],
+             ["%2D","-"],
+             ["%2C",","],
+             ["%28","("],
+             ["%29",")"],
+             ["%E9","e"],
+             ["%27","'"],
+             ["%24","$"],
+             ["%F8","oe"],
+             ["%5B","["],
+             ["%5D","]"],
+             ["%5B","["]
+             ]
+        
+        for thisRp in rp:
+            tmp=tmp.replace(thisRp[0],thisRp[1])
+        
+        
+        return tmp
         
     def harvest(self):
         
 
-        bruteData=self.thispagesplit('<table border=0 cellpadding=0 cellspacing=0 width=574>','</table>')
+        bruteData=self.thispagesplit()
         
-        print(bruteData)
-        
-        i=1
-        for bruteEntry in bruteData.split('class=\'chart_song\'>')[1:]:
-            #print(str(i) + " -- " + self.getArtist(bruteEntry) + " - " + self.getTrack(bruteEntry))
-            i+=1
-            #self.topten.append([self.getArtist(bruteEntry),self.getTrack(bruteEntry)])
+        for bruteEntry in bruteData.split('<tr onclick="location.href')[1:]:
+
+            self.topten.append([self.clean(self.getArtist(bruteEntry)),self.clean(self.getTrack(bruteEntry))])
         
         

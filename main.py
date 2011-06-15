@@ -4,68 +4,63 @@ Created on Jun 14, 2011
 @author: xtephan
 '''
 import sys
+import time
 
-try: 
-    from BBCMiner import BBCMiner
-    print("Loading BBCMiner...")
-except Exception:
-    print("Error loading BBCMiner")
-    sys.exit(0)
-    
-try: 
-    from AT40 import AT40
-    print("Loading AT40 Miner...")
-except Exception:
-    print("Error loading AT40 Miner")
-    sys.exit(0)
-    
-try: 
-    from DanishCharts import DC
-    print("Loading DanishCharts Miner...")
-except Exception:
-    print("Error loading DanishCharts Miner")
-    sys.exit(0)
-    
-try: 
-    from Radio21 import R21
-    print("Loading Radio21 Miner...")
-except Exception:
-    print("Error loading Radio21 Miner")
-    sys.exit(0)
-    
-try: 
-    from DEMiner import DE40
-    print("Loading Germany Miner...")
-except Exception:
-    print("Error loading Germany Miner")
-    sys.exit(0)
+
+libs = [
+        ["BBCMiner","BBCMiner"],
+        ["AT40","AT40"],
+        ["DanishCharts","DC"],
+        ["Radio21","R21"],
+        ["DEMiner","DE40"]
+        ]
+
+
+for thisLib in libs:
+    try: 
+        exec("from " + thisLib[0] + " import " + thisLib[1])
+        print("Loading " + thisLib[0] + " Miner...")
+        time.sleep(1)
+    except Exception:
+        print("Error loading " + thisLib[0] + " Miner")
+        sys.exit(0)
 
 
 if __name__ == '__main__':
     
+    print("\n\n")
+    miners=[]
+    
     for arg in sys.argv: 
         
         if arg=="bbc" or arg=="all":
-            bbc = BBCMiner()
-            bbc.harvest()
-            bbc.display() 
+            miners.append(BBCMiner())
             
         if arg=="at40" or arg=="all":
-            at = AT40()
-            at.harvest()
-            at.display()
+            miners.append(AT40())   
             
-        if arg=="r21" or arg=="all":            
-            r21 = R21()
-            r21.harvest()
-            r21.display()
+        if arg=="r21" or arg=="all":    
+            miners.append(R21())        
             
         if arg=="de40" or arg=="all":     
-            de = DE40()
-            de.harvest()
-            de.gensql()
-            #de.display()
+            miners.append(DE40())
+            
+        if arg=="dc40" or arg=="all":     
+            miners.append(DC())
+    
+    #TODO: mysql command 
+    
+    
+    for thisMiner in miners:
+        
+        thisMiner.harvest()
+        thisMiner.gensql()
+        #thisMiner.saveToDB()
+        thisMiner.display()
+        thisMiner.done()
+        
 
+        time.sleep(3)
     
 
     print("[**] Job Done! See ya!!")

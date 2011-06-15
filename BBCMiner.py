@@ -19,6 +19,7 @@ class BBCMiner(Miner):
         '''
         self.url="http://www.bbc.co.uk/radio1/chart/singles"
         self.topten=[]
+        self.name="bcc"
         
         
     def getArtist(self,text):

@@ -9,7 +9,7 @@ from MIner import Miner
 
 class R21(Miner):
     '''
-    Miner the DE40
+    Miner the R21
     '''
 
 
@@ -19,6 +19,7 @@ class R21(Miner):
         '''
         self.url="http://www.radio21.ro/site/muzica/clasamente/content/id/1/Hit40.html"
         self.topten=[]
+        self.name="r21"
         
         
     def getArtist(self,text):

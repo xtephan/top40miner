@@ -19,6 +19,7 @@ class AT40(Miner):
         '''
         self.url="http://www.at40.com/top-40/chart/18937"
         self.topten=[]
+        self.name="at40"
         
         
     def getArtist(self,text):
